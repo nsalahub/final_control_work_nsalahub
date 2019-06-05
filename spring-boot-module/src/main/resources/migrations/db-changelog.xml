@@ -1,0 +1,56 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <changeSet author="nikolay.salahub@gmail.com" id="CREATE_USER_TABLE_CHANGE_SET">
+        <createTable tableName="User">
+            <column autoIncrement="true" name="u_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="u_username" type="VARCHAR(128)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="u_password" type="VARCHAR(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="u_deleted" type="BOOLEAN" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="u_role"
+                    type="ENUM('ADMINISTRATOR', 'CUSTOMER')"
+                    defaultValue="ADMINISTRATOR">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="nikolay.salahub@gmail.com" id="CREATE_TABLE_BUSINESS_CARD_TABLE_CHANGE_SET">
+        <createTable tableName="BusinessCard">
+            <column autoIncrement="true" name="b_id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="b_title" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="b_full_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="b_working_telephone" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="b_deleted" type="BOOLEAN" defaultValue="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="b_user_id" type="BIGINT">
+                <constraints nullable="false"
+                             foreignKeyName="user_id" references="User(u_id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+
+</databaseChangeLog>
+
+
